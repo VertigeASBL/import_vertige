@@ -1,0 +1,6 @@
+name = Import Vertige
+description = Collection de Fonctions pour importer des éléments dans Drupal
+core = 7.x
+package = importeur
+
+configure = admin/config/content/import_vertige

@@ -1,0 +1,86 @@
+<?php
+
+/*
+*    Function d'importation Vertige de base de donnée pour durpal.
+*
+*    Didier - Vertige ASBL
+*    http://www.vertige.org/
+*    http://p.henix.be/
+*/
+
+/*
+*   Fonction pour créer un nouvel utilisateur EASPD
+*/
+function create_easpd_user($user_name, $email) {
+    // On va générer un password
+    $password = user_password();
+
+    // Tableau de création d'utilisateur
+    $edit = array(
+        'name' => 'test',
+        'pass' => $password,
+        'mail' => 'didier@vertige.org',
+        'status' => 1,
+        'roles' => array(2 => 'authenticated user'),
+        );
+
+    // Création de l'utilisateur dans la base de donnée
+    user_save(drupal_anonymous_user(), $edit);
+
+    // On renvoie le password que l'on vient de créer
+    return $password;
+}
+
+
+/*
+*   Créer un menu principal pour ce module.
+*/
+function import_vertige_menu() {
+    $items['admin/import_vertige'] = array(
+        'title' => 'Importateur Vertige',
+        'description' => 'Fucking import user zombi',
+        // Ici placer la fonction à utiliser pour l'importation dans drupal
+        // Faut l'écrire cependant, soit pas feignant !
+        'page callback' => '_import_vertige_importer_EASPD',
+        'access arguments' => array('access administration pages'),
+        'type' => MENU_NORMAL_ITEM
+        );
+
+    return $items;
+}
+
+/*
+*   Fonction qui import et créer des utilisateurs pour EASPD
+*/
+function _import_vertige_importer_EASPD() {
+
+    // En premier lieu, on va séléctionner les utilisateurs
+    // $user_to_import = db_select('import', 'i')
+    //                     ->fields('i', array('UserName', 'Email'))
+    //                     ->execute();
+    
+    // On boucle sur tout les utilisateurs de la base de donnée import
+    // while($news_user = $user_to_import->fetchAssoc()) {
+    //     // Création du nouvel utilisateur
+    //     $user = create_easpd_user($news_user['UserName'] , $news_user['Email']);
+    // }
+
+    $user = create_easpd_user('test' , 'Didier@vertige.org');
+    drupal_mail(
+        array(
+        'id' => 'easpd_user_create',
+        'to' => 'didier@vertige.org',
+        'subject' => 'Easpd Access',
+        'body' => drupal_wrap_mail('
+            Hello,
+            Here is your login and password for EASPD website.
+
+            login: test
+            password: '.$user.'
+
+            http://www.easpd.eu/user')
+        )
+    );
+
+    return var_export($user, true);
+}
