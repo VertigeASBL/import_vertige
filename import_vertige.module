@@ -78,5 +78,5 @@ http://www.easpd.eu/user'
     
     }
 
-    return var_export($user, true);
+    return t('Importation des utilisateurs terminée.');
 }
