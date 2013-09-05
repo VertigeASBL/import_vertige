@@ -55,32 +55,28 @@ function import_vertige_menu() {
 function _import_vertige_importer_EASPD() {
 
     // En premier lieu, on va séléctionner les utilisateurs
-    // $user_to_import = db_select('import', 'i')
-    //                     ->fields('i', array('UserName', 'Email'))
-    //                     ->execute();
+    $user_to_import = db_select('import', 'i')
+                        ->fields('i', array('UserName', 'Email'))
+                        ->execute();
     
-    // On boucle sur tout les utilisateurs de la base de donnée import
-    // while($news_user = $user_to_import->fetchAssoc()) {
-    //     // Création du nouvel utilisateur
-    //     $user = create_easpd_user($news_user['UserName'] , $news_user['Email']);
-    // }
+    On boucle sur tout les utilisateurs de la base de donnée import
+    while($news_user = $user_to_import->fetchAssoc()) {
+        // Création du nouvel utilisateur
+        $user_password = create_easpd_user($news_user['UserName'] , $news_user['Email']);
+        // On prévient la personne
+        mail(
+        $news_user['Email'],
+        'Easpd Access',
+'Hello,
+Here is your login and password for EASPD website.
 
-    $user = create_easpd_user('test' , 'Didier@vertige.org');
-    drupal_mail(
-        array(
-        'id' => 'easpd_user_create',
-        'to' => 'didier@vertige.org',
-        'subject' => 'Easpd Access',
-        'body' => drupal_wrap_mail('
-            Hello,
-            Here is your login and password for EASPD website.
+login: test
+password: '.$user_password.'
 
-            login: test
-            password: '.$user.'
-
-            http://www.easpd.eu/user')
-        )
-    );
+http://www.easpd.eu/user'
+        );
+    
+    }
 
     return var_export($user, true);
 }
