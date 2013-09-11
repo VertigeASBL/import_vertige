@@ -17,7 +17,7 @@ function create_easpd_user($user_name, $email) {
 
     // Tableau de création d'utilisateur
     $edit = array(
-        'name' => 'test',
+        'name' => $user_name,
         'pass' => $password,
         'mail' => $email,
         'status' => 1,
