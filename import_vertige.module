@@ -19,7 +19,7 @@ function create_easpd_user($user_name, $email) {
     $edit = array(
         'name' => 'test',
         'pass' => $password,
-        'mail' => 'didier@vertige.org',
+        'mail' => $email,
         'status' => 1,
         'roles' => array(2 => 'authenticated user'),
         );
@@ -58,9 +58,9 @@ function _import_vertige_importer_EASPD() {
     $user_to_import = db_select('import', 'i')
                         ->fields('i', array('UserName', 'Email'))
                         ->execute();
-    
     // On boucle sur tout les utilisateurs de la base de donnée import
     while($news_user = $user_to_import->fetchAssoc()) {
+
         // Création du nouvel utilisateur
         $user_password = create_easpd_user($news_user['UserName'] , $news_user['Email']);
         // On prévient la personne
