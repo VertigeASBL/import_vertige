@@ -59,7 +59,7 @@ function _import_vertige_importer_EASPD() {
                         ->fields('i', array('UserName', 'Email'))
                         ->execute();
     
-    On boucle sur tout les utilisateurs de la base de donnée import
+    // On boucle sur tout les utilisateurs de la base de donnée import
     while($news_user = $user_to_import->fetchAssoc()) {
         // Création du nouvel utilisateur
         $user_password = create_easpd_user($news_user['UserName'] , $news_user['Email']);
