@@ -64,17 +64,17 @@ function _import_vertige_importer_EASPD() {
         // Création du nouvel utilisateur
         $user_password = create_easpd_user($news_user['UserName'] , $news_user['Email']);
         // On prévient la personne
-        mail(
-        $news_user['Email'],
-        'Easpd Access',
-'Hello,
-Here is your login and password for EASPD website.
+/*         mail( */
+/*         $news_user['Email'], */
+/*         'Easpd Access', */
+/* 'Hello, */
+/* Here is your login and password for EASPD website. */
 
-login: test
-password: '.$user_password.'
+/* login: test */
+/* password: '.$user_password.' */
 
-http://www.easpd.eu/user'
-        );
+/* http://www.easpd.eu/user' */
+/*         ); */
     
     }
 
